@@ -69,11 +69,10 @@ class WebsocketRequestImpl {
       CandlestickEvent candlestickEvent = new CandlestickEvent();
       candlestickEvent.setSymbol(parser.getSymbol());
       candlestickEvent.setInterval(interval);
-      candlestickEvent.setTimestamp(
-          TimeService.convertCSTInMillisecondToUTC(jsonWrapper.getLong("ts")));
+      candlestickEvent.setTimestamp(jsonWrapper.getLong("ts"));
       JsonWrapper tick = jsonWrapper.getJsonObject("tick");
       Candlestick data = new Candlestick();
-      data.setTimestamp(TimeService.convertCSTInSecondToUTC(tick.getLong("id")));
+      data.setTimestamp(tick.getLong("id"));
       data.setOpen(tick.getBigDecimal("open"));
       data.setClose(tick.getBigDecimal("close"));
       data.setLow(tick.getBigDecimal("low"));
@@ -111,7 +110,7 @@ class WebsocketRequestImpl {
       ChannelParser parser = new ChannelParser(ch);
       TradeEvent tradeEvent = new TradeEvent();
       tradeEvent.setSymbol(parser.getSymbol());
-      tradeEvent.setTimestamp(TimeService.convertCSTInMillisecondToUTC(jsonWrapper.getLong("ts")));
+      tradeEvent.setTimestamp(jsonWrapper.getLong("ts"));
       JsonWrapper tick = jsonWrapper.getJsonObject("tick");
       JsonWrapperArray dataArray = tick.getJsonArray("data");
       List<Trade> trades = new LinkedList<>();
@@ -121,7 +120,7 @@ class WebsocketRequestImpl {
         trade.setPrice(item.getBigDecimal("price"));
         trade.setTradeId(item.getString("id"));
         trade.setDirection(TradeDirection.lookup(item.getString("direction")));
-        trade.setTimestamp(TimeService.convertCSTInMillisecondToUTC(item.getLong("ts")));
+        trade.setTimestamp(item.getLong("ts"));
         trades.add(trade);
       });
       tradeEvent.setTradeList(trades);
@@ -154,7 +153,7 @@ class WebsocketRequestImpl {
       ChannelParser parser = new ChannelParser(ch);
       PriceDepthEvent priceDepthEvent = new PriceDepthEvent();
       priceDepthEvent.setTimestamp(
-          TimeService.convertCSTInMillisecondToUTC(jsonWrapper.getLong("ts")));
+          jsonWrapper.getLong("ts"));
       priceDepthEvent.setSymbol(parser.getSymbol());
       JsonWrapper tick = jsonWrapper.getJsonObject("tick");
       List<DepthEntry> bidList = new LinkedList<>();
@@ -207,7 +206,7 @@ class WebsocketRequestImpl {
       OrderUpdateEvent orderUpdateEvent = new OrderUpdateEvent();
       orderUpdateEvent.setSymbol(parser.getSymbol());
       orderUpdateEvent.setTimestamp(
-          TimeService.convertCSTInMillisecondToUTC(jsonWrapper.getLong("ts")));
+          jsonWrapper.getLong("ts"));
       JsonWrapper data = jsonWrapper.getJsonObject("data");
       Order order = new Order();
       order.setOrderId(data.getLong("order-id"));
@@ -217,7 +216,7 @@ class WebsocketRequestImpl {
       order.setAmount(data.getBigDecimal("order-amount"));
       order.setPrice(data.getBigDecimal("order-price"));
       order.setCreatedTimestamp(
-          TimeService.convertCSTInMillisecondToUTC(data.getLong("created-at")));
+          data.getLong("created-at"));
       order.setType(OrderType.lookup(data.getString("order-type")));
       order.setFilledAmount(data.getBigDecimal("filled-amount"));
       order.setFilledCashAmount(data.getBigDecimal("filled-cash-amount"));
@@ -243,7 +242,7 @@ class WebsocketRequestImpl {
     request.jsonParser = (jsonWrapper) -> {
       AccountEvent accountEvent = new AccountEvent();
       accountEvent.setTimestamp(
-          TimeService.convertCSTInMillisecondToUTC(jsonWrapper.getLong("ts")));
+          jsonWrapper.getLong("ts"));
       JsonWrapper data = jsonWrapper.getJsonObject("data");
       accountEvent.setChangeType(AccountChangeType.lookup(data.getString("event")));
       JsonWrapperArray listArray = data.getJsonArray("list");
@@ -287,7 +286,7 @@ class WebsocketRequestImpl {
       TradeStatisticsEvent tradeStatisticsEvent = new TradeStatisticsEvent();
       tradeStatisticsEvent.setSymbol(parser.getSymbol());
       JsonWrapper tick = jsonWrapper.getJsonObject("tick");
-      long ts = TimeService.convertCSTInMillisecondToUTC(jsonWrapper.getLong("ts"));
+      long ts = jsonWrapper.getLong("ts");
       tradeStatisticsEvent.setTimeStamp(ts);
       TradeStatistics statistics = new TradeStatistics();
       statistics.setAmount(tick.getBigDecimal("amount"));
