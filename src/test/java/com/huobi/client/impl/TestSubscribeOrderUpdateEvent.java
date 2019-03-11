@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
@@ -26,6 +27,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({AccountsInfoMap.class})
 @PowerMockIgnore({"javax.crypto.*"})
+@Ignore
 public class TestSubscribeOrderUpdateEvent {
 
   Account testAccount1 = new Account();

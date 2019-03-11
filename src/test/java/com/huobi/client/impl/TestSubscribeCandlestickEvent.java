@@ -10,8 +10,11 @@ import com.huobi.client.model.event.CandlestickEvent;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class TestSubscribeCandlestickEvent {
 
   private static final String data = "{\n"

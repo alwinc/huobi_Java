@@ -10,10 +10,13 @@ import com.huobi.client.model.event.PriceDepthEvent;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+@Ignore
 public class TestSubscribePriceDepthEvent {
 
   private String data = "{\n"
