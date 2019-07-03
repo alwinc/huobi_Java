@@ -18,6 +18,7 @@ import com.huobi.client.model.EtfSwapHistory;
 import com.huobi.client.model.ExchangeInfo;
 import com.huobi.client.model.LastTradeAndBestQuote;
 import com.huobi.client.model.Loan;
+import com.huobi.client.model.MarginBalanceDetail;
 import com.huobi.client.model.MatchResult;
 import com.huobi.client.model.Order;
 import com.huobi.client.model.PriceDepth;
@@ -40,6 +41,7 @@ import com.huobi.client.model.request.WithdrawRequest;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public class AsyncRequestImpl implements AsyncRequestClient {
 
@@ -78,7 +80,7 @@ public class AsyncRequestImpl implements AsyncRequestClient {
 
   @Override
   public void getPriceDepth(String symbol, ResponseCallback<AsyncResult<PriceDepth>> callback) {
-    RestApiInvoker.callASync(requestImpl.getPriceDepth(symbol, null), callback);
+    RestApiInvoker.callASync(requestImpl.getPriceDepth(symbol, 20), callback);
   }
 
   @Override
@@ -227,6 +229,11 @@ public class AsyncRequestImpl implements AsyncRequestClient {
   }
 
   @Override
+  public void getTickers(ResponseCallback<AsyncResult<Map<String, TradeStatistics>>> callback) {
+    RestApiInvoker.callASync(requestImpl.getTickers(), callback);
+  }
+
+  @Override
   public void createOrder(NewOrderRequest newOrderRequest,
                           ResponseCallback<AsyncResult<Long>> callback) {
     RestApiInvoker.callASync(requestImpl.createOrder(newOrderRequest), callback);
@@ -303,7 +310,8 @@ public class AsyncRequestImpl implements AsyncRequestClient {
   }
 
   @Override
-  public void getSpecifyAccountBalance(long subId, ResponseCallback<AsyncResult<List<CompleteSubAccountInfo>>> callback) {
+  public void getSpecifyAccountBalance(long subId,
+      ResponseCallback<AsyncResult<List<CompleteSubAccountInfo>>> callback) {
     RestApiInvoker.callASync(requestImpl.getSpecifyAccountBalance(subId), callback);
   }
 
@@ -329,5 +337,11 @@ public class AsyncRequestImpl implements AsyncRequestClient {
   public void getEtfCandlestick(String etfSymbol, CandlestickInterval interval, Integer limit,
                                 ResponseCallback<AsyncResult<List<Candlestick>>> callback) {
     RestApiInvoker.callASync(requestImpl.getETFCandlestick(etfSymbol, interval, limit), callback);
+  }
+
+  @Override
+  public void getMarginBalanceDetail(
+      String symbol, ResponseCallback<AsyncResult<List<MarginBalanceDetail>>> callback) {
+    RestApiInvoker.callASync(requestImpl.getMarginBalanceDetail(symbol), callback);
   }
 }
