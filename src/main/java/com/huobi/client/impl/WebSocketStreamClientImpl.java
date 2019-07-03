@@ -125,13 +125,14 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
       watchDog.onClosedNormally(connection);
       connection.close();
     }
+    connections.clear();
   }
 
   @Override
   public void subscribeAccountEvent(
       BalanceMode mode,
       SubscriptionListener<AccountEvent> subscriptionListener) {
-    createConnection(requestImpl.subscribeAccountEvent(mode, subscriptionListener, null));
+    subscribeAccountEvent(mode,subscriptionListener,null);
   }
 
   @Override
@@ -139,7 +140,7 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
       BalanceMode mode,
       SubscriptionListener<AccountEvent> subscriptionListener,
       SubscriptionErrorHandler errorHandler) {
-    subscribeAccountEvent(mode, subscriptionListener, errorHandler);
+    createConnection(requestImpl.subscribeAccountEvent(mode, subscriptionListener, errorHandler));
   }
 
   @Override

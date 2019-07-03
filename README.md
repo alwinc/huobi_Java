@@ -11,7 +11,7 @@ The SDK supports both synchronous and asynchronous RESTful API invoking, and sub
 - [Beginning](#Beginning)
   - [Installation](#Installation)
   - [Quick Start](#Quick-Start)
-  - [Create service](#Create-service)
+  - [Request vs. Subscription](#request-vs.-subscription)
   - [Clients](#Clients)
   - [Create client](#create-client)
   - [Custom host](#custom-host)
@@ -19,7 +19,10 @@ The SDK supports both synchronous and asynchronous RESTful API invoking, and sub
   - [Synchronous](#Synchronous)
   - [Asynchronous](#Asynchronous)
   - [Subscription](#Subscription)
+  - [Errir handling](error-handling)
+
 - [Request example](#Request-example)
+
   - [Reference data](#Reference-data)
     - [Exchange timestamp](#Exchange-timestamp)
     - [Symbol and currencies](#symbol-and-currencies)
@@ -40,6 +43,7 @@ The SDK supports both synchronous and asynchronous RESTful API invoking, and sub
     - [Cancel order](#cancel-order)
     - [Cancel open orders](#cancel-open-orders)
     - [Get order info](#get-order-info)
+    - [Historical orders](#historical_orders)
   - [Margin Loan](#margin-loan)
     - [Apply loan](#apply-loan)
     - [Reply loan](#reply-loan)
@@ -50,7 +54,8 @@ The SDK supports both synchronous and asynchronous RESTful API invoking, and sub
   - [Subscribe order update](#subscribe-order-update)
   - [Subscribe account change](#subscribe-account-change)
   - [Unsubscribe](#unsubscribe)
-- [License](#license)
+
+  
 
 ## Beginning
 
@@ -58,29 +63,9 @@ The SDK supports both synchronous and asynchronous RESTful API invoking, and sub
 
 *The SDK is compiled by Java8*
 
-#### Maven
-
-*The maven installation will be supported in final version.*
-
-For Beta version, please imoprt the source code in java IDE (idea or eclipse)
+For Beta version, please import the source code in java IDE (idea or eclipse)
 
 The example code is in huobi-api-sdk/java/src/test/java/com/huobi/client/examples.
-
-
-
-<TBD>
-
-Add the following dependency to ```pom.xml``` in your project. 
-
-```xml
-<dependency>
-  <groupId>xxx</groupId>
-  <artifactId>xxx</artifactId>
-  <version>1.0.0</version>
-</dependency>
-```
-
-
 
 ### Quick Start
 
@@ -465,7 +450,7 @@ asyncClient.getBestQuote("btcusdt", (bestQuoteResult) -> {
 ```java
 //Synchronous
 List<Trade> tradeList = syncClient.getHistoricalTrade("btcusdt", 5);
-System.out.println(trade.getPrice());
+System.out.println(tradeList.get(0).getPrice());
 ```
 
 ```java
@@ -543,7 +528,7 @@ asyncClient.withdraw(request, (withdrawResult) -> {
 
 ```java
 //Synchronous
-syncClient.cancelWithdraw(id);
+syncClient.cancelWithdraw("btc", id);
 ```
 
 ```java

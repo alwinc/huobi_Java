@@ -76,7 +76,7 @@ public class WebSocketConnection extends WebSocketListener {
     try {
       String host = new URI(options.getUri()).getHost();
       this.tradingHost = host;
-      if (host.indexOf("api.") == 0) {
+      if (host.indexOf("api") == 0) {
         this.subscriptionMarketUrl = "wss://" + host + "/ws";
         this.subscriptionTradingUrl = "wss://" + host + "/ws/v1";
       } else {
@@ -226,7 +226,7 @@ public class WebSocketConnection extends WebSocketListener {
       request.updateCallback.onReceive(obj);
     } catch (Exception e) {
       onError("Process error: " + e.getMessage()
-          + " You should capture the exception in your SubscriptionListener", e);
+          + " You should capture the exception in your error handler", e);
     }
   }
 
